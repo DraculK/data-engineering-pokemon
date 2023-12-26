@@ -26,11 +26,11 @@ def set_unique_id(poke_csv):
 
 def database_connection(poke_df):
     conn = psycopg2.connect(
-        database="postgres",
-        user="postgres",
-        password="1234",
-        host="localhost",
-        port="5432"
+        database="",
+        user="",
+        password=",
+        host="",
+        port=""
     )
 
     conn.autocommit = True
