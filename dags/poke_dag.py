@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.python import PythonOperator
-from main import check_if_data_exists
+from main import check_if_data_exists, set_unique_id
 
 default_args = {
     'owner': 'poke',
@@ -18,8 +18,15 @@ with DAG(
     schedule_interval='@daily'
 ) as dag:
     task1 = PythonOperator(
-        task_id='PokeSpider',
+        task_id='Data_Validation',
         python_callable=check_if_data_exists,
         op_args=['dags/poke.json']
     )
-    task1
+
+    task2 = PythonOperator(
+        task_id='Unique_ID',
+        python_callable=set_unique_id,
+        op_args=['poke.csv']
+
+    )
+    task1 >> task2
